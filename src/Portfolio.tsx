@@ -292,8 +292,8 @@ const ServicesSection = () => {
       
       <div className="max-w-5xl mx-auto flex flex-col">
         {services.map((srv, i) => (
-          <FadeIn key="{i}" delay="{i" * 0.1} y="{30}">
-            <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-16 py-8 sm:py-10 md:py-12 border-b border-[#0c0c0c26] last:border-0">
+<FadeIn key={i} delay={i * 0.1} y={30}>
+              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-16 py-8 sm:py-10 md:py-12 border-b border-[#0c0c0c26] last:border-0">
               <span className="font-black text-[clamp(3rem,10vw,140px)] leading-none">0{i + 1}</span>
               <div className="flex flex-col gap-2 md:gap-4">
                 <h3 className="font-medium uppercase text-[clamp(1rem,2.2vw,2.1rem)]">{srv.title}</h3>
