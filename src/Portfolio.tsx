@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, ReactNode } from 'react';
+import { useRef, useEffect, useState, type ReactNode, type MouseEvent as ReactMouseEvent } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 // --- GLOBAL STYLES & FONTS ---
@@ -25,6 +25,15 @@ const GlobalStyles = () => (
 
 // --- REUSABLE COMPONENTS ---
 
+interface FadeInProps {
+  children: ReactNode;
+  delay?: number;
+  duration?: number;
+  x?: number;
+  y?: number;
+  className?: string;
+}
+
 const FadeIn = ({ 
   children, 
   delay = 0, 
@@ -32,7 +41,7 @@ const FadeIn = ({
   x = 0, 
   y = 30, 
   className = "" 
-}: { children: ReactNode, delay?: number, duration?: number, x?: number, y?: number, className?: string }) => {
+}: FadeInProps) => {
   return (
     <motion.div
       className={className}
@@ -46,6 +55,15 @@ const FadeIn = ({
   );
 };
 
+interface MagnetProps {
+  children: ReactNode;
+  padding?: number;
+  strength?: number;
+  activeTransition?: string;
+  inactiveTransition?: string;
+  className?: string;
+}
+
 const Magnet = ({ 
   children, 
   padding = 150, 
@@ -53,12 +71,12 @@ const Magnet = ({
   activeTransition = "transform 0.3s ease-out", 
   inactiveTransition = "transform 0.6s ease-in-out",
   className = ""
-}: any) => {
+}: MagnetProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isActive, setIsActive] = useState(false);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: ReactMouseEvent) => {
     if (!containerRef.current) return;
     const { left, top, width, height } = containerRef.current.getBoundingClientRect();
     const centerX = left + width / 2;
@@ -141,7 +159,7 @@ const LiveProjectButton = () => (
 const HeroSection = () => {
   return (
     <section className="h-screen flex flex-col overflow-x-clip relative w-full">
-      <FadeIn delay="{0}" y="{-20}" className="w-full z-20 relative">
+      <FadeIn delay={0} y={-20} className="w-full z-20 relative">
         <nav className="flex justify-between px-6 md:px-10 pt-6 md:pt-8 text-[#D7E2EA] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.4rem]">
           {['About', 'Price', 'Projects', 'Contact'].map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} className="hover:opacity-70 transition-opacity duration-200">{item}</a>
@@ -150,7 +168,7 @@ const HeroSection = () => {
       </FadeIn>
 
       <div className="flex-1 flex flex-col justify-center relative z-20 overflow-hidden w-full mt-6 sm:mt-4 md:-mt-5">
-        <FadeIn delay="{0.15}" y="{40}" className="w-full text-center">
+        <FadeIn delay={0.15} y={40} className="w-full text-center">
           <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap text-[14vw] sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]">
             Hi, i&apos;m jack
           </h1>
@@ -158,7 +176,7 @@ const HeroSection = () => {
       </div>
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         <FadeIn delay="{0.6}" y="{30}" className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 z-10 pointer-events-auto w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]">
+         <FadeIn delay={0.6} y={30} className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 z-10 pointer-events-auto w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]">
           <Magnet>
             <img src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png" alt="Jack Portrait" className="w-full h-auto" />
           </Magnet>
@@ -166,12 +184,12 @@ const HeroSection = () => {
       </div>
 
       <div className="flex justify-between items-end pb-7 sm:pb-8 md:pb-10 px-6 md:px-10 z-20 relative">
-        <FadeIn delay="{0.35}" y="{20}">
+        <FadeIn delay={0.35} y={20}>
           <p className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[220px] md:max-w-[260px] text-[clamp(0.75rem,1.4vw,1.5rem)]">
             a 3d creator driven by crafting striking and unforgettable projects
           </p>
         </FadeIn>
-        <FadeIn delay="{0.5}" y="{20}">
+        <FadeIn delay={0.5} y={20}>
           <ContactButton/>
         </FadeIn>
       </div>
@@ -242,21 +260,21 @@ const MarqueeSection = () => {
 const AboutSection = () => {
   return (
     <section id="about" className="min-h-screen relative flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-20 overflow-hidden">
-      <FadeIn delay="{0.1}" x="{-80}" duration="{0.9}" className="absolute top-[4%] left-[1%] sm:left-[2%] md:left-[4%] w-[120px] sm:w-[160px] md:w-[210px]">
+      <FadeIn delay={0.1} x={-80} duration={0.9} className="absolute top-[4%] left-[1%] sm:left-[2%] md:left-[4%] w-[120px] sm:w-[160px] md:w-[210px]">
         <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png" alt="Moon" />
       </FadeIn>
-      <FadeIn delay="{0.25}" x="{-80}" duration="{0.9}" className="absolute bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%] w-[100px] sm:w-[140px] md:w-[180px]">
+      <FadeIn delay={0.25} x={-80} duration={0.9} className="absolute bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%] w-[100px] sm:w-[140px] md:w-[180px]">
         <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png" alt="3D Object" />
       </FadeIn>
-      <FadeIn delay="{0.15}" x="{80}" duration="{0.9}" className="absolute top-[4%] right-[1%] sm:right-[2%] md:right-[4%] w-[120px] sm:w-[160px] md:w-[210px]">
+      <FadeIn delay={0.15} x={80} duration={0.9} className="absolute top-[4%] right-[1%] sm:right-[2%] md:right-[4%] w-[120px] sm:w-[160px] md:w-[210px]">
         <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png" alt="Lego" />
       </FadeIn>
-      <FadeIn delay="{0.3}" x="{80}" duration="{0.9}" className="absolute bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%] w-[130px] sm:w-[170px] md:w-[220px]">
+      <FadeIn delay={0.3} x={80} duration={0.9} className="absolute bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%] w-[130px] sm:w-[170px] md:w-[220px]">
         <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png" alt="3D Group" />
       </FadeIn>
 
       <div className="flex flex-col items-center gap-10 sm:gap-14 md:gap-16 z-10">
-        <FadeIn delay="{0}" y="{40}">
+        <FadeIn delay={0} y={40}>
           <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center text-[clamp(3rem,12vw,160px)]">
             About me
           </h2>
@@ -264,7 +282,7 @@ const AboutSection = () => {
         
         <div className="flex flex-col items-center gap-16 sm:gap-20 md:gap-24">
           <AnimatedText text="With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!" className="font-medium text-center leading-relaxed max-w-[560px] text-[clamp(1rem,2vw,1.35rem)]"/>
-          <FadeIn y="{30}" delay="{0.2}">
+          <FadeIn y={30} delay={0.2}>
             <ContactButton/>
           </FadeIn>
         </div>
@@ -292,8 +310,8 @@ const ServicesSection = () => {
       
       <div className="max-w-5xl mx-auto flex flex-col">
         {services.map((srv, i) => (
-<FadeIn key={i} delay={i * 0.1} y={30}>
-              <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-16 py-8 sm:py-10 md:py-12 border-b border-[#0c0c0c26] last:border-0">
+          <FadeIn key={i} delay={i * 0.1} y={30}>
+            <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-16 py-8 sm:py-10 md:py-12 border-b border-[#0c0c0c26] last:border-0">
               <span className="font-black text-[clamp(3rem,10vw,140px)] leading-none">0{i + 1}</span>
               <div className="flex flex-col gap-2 md:gap-4">
                 <h3 className="font-medium uppercase text-[clamp(1rem,2.2vw,2.1rem)]">{srv.title}</h3>
